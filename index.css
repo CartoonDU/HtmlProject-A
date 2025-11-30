@@ -22,7 +22,7 @@
 }
 
 :root {
-    --charcoal: #191d1a;
+    --charcoal: #32ed61;
     --white: #fff;
 }
 
@@ -96,23 +96,13 @@ body {
     justify-content: center;
 }
 
-/* Date Badge */
-.departure-date-tag {
-    background: #ff4814;
-    font-size: 24px;
-    font-weight: 800;
-    align-self: center;
-    margin-bottom: 30px;
-    padding: 8px;
-}
-
 /* Background Utility Classes */
 .bg-neutral-custom {
-    background-color: #f4e9c4;
+    background-color: #32ed61;
 }
 
 .bg-highlight-custom {
-    background-color: #fff38b;
+    background-color: #32ed61;
 }
 
 /* Content Section */
@@ -132,7 +122,7 @@ body {
     font-size: 14px;
     padding: 14px;
     max-width: 44vw;
-    background-color: #ff4207;
+    background-color: #32ed61;  /* Warning At Top */
     color: black;
     margin-bottom: 46px;
 }
@@ -148,12 +138,12 @@ body {
 }
 
 .content-wrapper tr:nth-child(even) {
-    background-color: #aaa393;
+    background-color: #6b665a;
 }
 
 .content-wrapper tr:hover,
 .content-wrapper tr:nth-child(even):hover {
-    background-color: #f1e7d1;
+    background-color: #454343;
 }
 
 .content-wrapper tr:first-child:hover {
@@ -172,20 +162,6 @@ body {
 
 .content-wrapper td:nth-child(1n + 2) {
     text-align: right;
-}
-
-/* Custom List Areas */
-.info-list-box {
-    font-weight: 400;
-    font-style: normal;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-size: 18px;
-    background: #232323;
-    border-radius: 10px;
-    margin: 24px 18px;
-    font-family: "Helvetica", HelveticaNeue, Helvetica Nueue, sans-serif;
 }
 
 .info-list-box li {
@@ -225,8 +201,8 @@ body {
 }
 
 .home-nav-links ul li:hover {
-    background-color: #16191d;
-    color: #ff3d00;
+    background-color: #e3d8d8;
+    color: #e3d8d8;
 }
 
 /* Media Queries */
