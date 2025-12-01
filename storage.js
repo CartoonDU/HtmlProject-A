@@ -1,17 +1,26 @@
-function saveOfficer(data) {
-    let officers = JSON.parse(localStorage.getItem("officers") || "[]");
-    officers.push(data);
-    localStorage.setItem("officers", JSON.stringify(officers));
+const STORAGE_KEY = "pssrp_officers_db";
+
+function loadOfficerDB() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
 }
 
-function getOfficers() {
-    return JSON.parse(localStorage.getItem("officers") || "[]");
+function saveOfficerDB(db) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(db, null, 2));
 }
 
-function getOfficerById(id) {
-    return getOfficers().find(x => x.id == id);
+function addOfficer(officerData) {
+    const db = loadOfficerDB();
+    db[officerData.id] = officerData;
+    saveOfficerDB(db);
 }
 
-function getOfficersByDivision(div) {
-    return getOfficers().filter(x => x.division === div);
+function getOfficer(id) {
+    const db = loadOfficerDB();
+    return db[id] || null;
+}
+
+function getOfficersByDivision(division) {
+    const db = loadOfficerDB();
+    return Object.values(db).filter(o => o.division === division);
 }
