@@ -1,1 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width" />
+  <title>PSSRP Admin Panel</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
 
+<body>
+  <header class="admin-header">
+    <h1>PSSRP Officer Administration</h1>
+    <h2>Create • Manage • Update Officer Records</h2>
+  </header>
+
+  <main class="admin-container">
+    <form id="officerForm" class="admin-form">
+      <h2>Add / Update Officer</h2>
+
+      <label>Full Name</label>
+      <input type="text" id="name" required />
+
+      <label>Badge Number</label>
+      <input type="text" id="badge" required />
+
+      <label>Serial / ID</label>
+      <input type="text" id="serial" required />
+
+      <label>Rank</label>
+      <input type="text" id="rank" required />
+
+      <label>Division Assigned</label>
+      <input type="text" id="division" required />
+
+      <label>Age</label>
+      <input type="number" id="age" required />
+
+      <label>Headshot Image</label>
+      <input type="file" id="image" accept="image/*" />
+
+      <label>Employment History (Promotions / Demotions)</label>
+      <textarea id="history"></textarea>
+
+      <button type="submit" class="save-btn">Save Officer</button>
+    </form>
+
+    <section class="officer-list">
+      <h2>Officer Database</h2>
+      <ul id="officerDisplay"></ul>
+    </section>
+  </main>
+
+  <script src="admin.js"></script>
+</body>
+</html>
