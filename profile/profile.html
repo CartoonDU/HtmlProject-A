@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width" />
 
-  <title>PSSRP Officer Profile</title>
+  <title>PSSRP Admin Panel</title>
 
   <script type="module">
     document.documentElement.classList.remove('no-js');
@@ -15,7 +15,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <script src="/storage.js" defer></script>
-  <script src="/profile.js" defer></script>
+  <script src="/admin.js" defer></script>
 
 </head>
 
@@ -24,103 +24,98 @@
 <header class="text-center py-10">
   <h1 class="text-5xl font-bold text-orange-500 uppercase">
     <a href="/" class="text-orange-500 no-underline">
-      <span>P</span>SS <span>R</span>P Database
+      <span>P</span>SS <span>R</span>P Administration
     </a>
   </h1>
-  <h2 class="text-xl text-gray-300">Officer Personnel Profile</h2>
+  <h2 class="text-xl text-gray-300">Add & Manage Officers</h2>
 </header>
 
-<section class="lapd-profile-container">
+<section class="lapd-profile-container max-w-[900px] mx-auto">
 
-  <h1 id="officer-name" class="lapd-name"></h1>
+  <h1 class="lapd-name text-center">Admin Officer Creator</h1>
 
-  <div class="sm:flex gap-4 mx-auto max-w-[400px] sm:max-w-[1000px]">
-    
-    <div class="flex flex-col">
-      <img id="officer-photo"
-        class="w-[400px] md:h-[100%] object-contain rounded"
-        src="" />
-    </div>
+  <div class="bg-[#f8ebc9] text-black rounded-lg p-6">
 
-    <div class="flex flex-col gap-4 text-lg">
+    <form id="addOfficerForm" class="grid grid-cols-1 gap-6">
+
       <div>
-
-        <div><strong>Rank</strong>: <span id="officer-rank"></span></div>
-
-        <div>
-          <strong>Division</strong>:
-          <a id="officer-division-link" href="#" class="underline">
-            <span id="officer-division"></span>
-          </a>
-        </div>
-
-        <div class="mb-4">
-          <strong>Email</strong>:
-          <a id="officer-email" href="#" class="underline"></a>
-        </div>
-
-        <div class="md:grid grid-cols-2 gap-x-4">
-          <div><strong>Unit #</strong>: <span id="officer-serial"></span></div>
-          <div><strong>Badge</strong>: <span id="officer-badge"></span></div>
-        </div>
-
-        <div class="md:grid grid-cols-2 gap-4">
-          <div><strong>Age</strong>: <span id="officer-age"></span></div>
-          <div><strong>Year Joined</strong>: <span id="officer-joined"></span></div>
-        </div>
-
-        <div class="md:grid grid-cols-2 gap-4">
-          <div><strong>Height</strong>: <span id="officer-height"></span></div>
-          <div><strong>Weight</strong>: <span id="officer-weight"></span></div>
-        </div>
-
+        <label class="font-bold uppercase">Full Name</label>
+        <input id="name" type="text" class="w-full p-2 bg-white rounded" required />
       </div>
 
-      <div class="bg-[#ece5d0] rounded-md pl-4 pt-4 pb-5 text-black">
-
-        <ul class="tabs flex h-48 md:h-55" role="tablist">
-          <span class="font-bold truncate">PAYMENTS FOR&nbsp;</span>
-
-          <div class="item">
-            <input type="radio" name="tabs" id="tab2024" checked />
-            <label for="tab2024" class="pr-5 pb-3 pl-1 -m-1 font-bold">2024</label>
-            <div id="tab-content2024" class="tab-content">
-              <ul id="payroll-2024" class="payroll list-none text-sm md:text-lg"></ul>
-            </div>
-          </div>
-
-          <div class="item">
-            <input type="radio" name="tabs" id="tab2023" />
-            <label for="tab2023" class="pr-5 pb-3 pl-1 -m-1 font-bold">2023</label>
-            <div id="tab-content2023" class="tab-content">
-              <ul id="payroll-2023" class="payroll list-none text-sm md:text-lg"></ul>
-            </div>
-          </div>
-
-          <div class="item">
-            <input type="radio" name="tabs" id="tab2022" />
-            <label for="tab2022" class="pr-5 pb-3 pl-1 -m-1 font-bold">2022</label>
-            <div id="tab-content2022" class="tab-content">
-              <ul id="payroll-2022" class="payroll list-none text-sm md:text-lg"></ul>
-            </div>
-          </div>
-
-        </ul>
-
+      <div>
+        <label class="font-bold uppercase">Rank</label>
+        <input id="rank" type="text" class="w-full p-2 bg-white rounded" required />
       </div>
 
-    </div>
-  </div>
+      <div>
+        <label class="font-bold uppercase">Badge Number</label>
+        <input id="badge" type="text" class="w-full p-2 bg-white rounded" required />
+      </div>
 
-  <div class="bg-[#ece5d0] rounded-md p-4 mt-6 mx-auto max-w-[300px] sm:max-w-[850px] text-black">
-    <h2 class="font-bold text-[18px] uppercase">Employment History</h2>
+      <div>
+        <label class="font-bold uppercase">Unit / Serial Number</label>
+        <input id="serial" type="text" class="w-full p-2 bg-white rounded" required />
+      </div>
 
-    <div id="employment-history" class="text-sm md:text-base sm:flex gap-6 md:gap-0 md:flex-col"></div>
-  </div>
+      <div>
+        <label class="font-bold uppercase">Email</label>
+        <input id="email" type="email" class="w-full p-2 bg-white rounded" />
+      </div>
 
-  <div class="lapd-profile-note text-white">
-    <p>This profile is part of the PSSRP Personnel Roleplay Database.</p>
-    <p>All information displayed here is fictional and used strictly for roleplay purposes.</p>
+      <div>
+        <label class="font-bold uppercase">Age</label>
+        <input id="age" type="number" class="w-full p-2 bg-white rounded" />
+      </div>
+
+      <div>
+        <label class="font-bold uppercase">Height</label>
+        <input id="height" type="text" class="w-full p-2 bg-white rounded" />
+      </div>
+
+      <div>
+        <label class="font-bold uppercase">Weight</label>
+        <input id="weight" type="text" class="w-full p-2 bg-white rounded" />
+      </div>
+
+      <div>
+        <label class="font-bold uppercase">Year Joined</label>
+        <input id="joined" type="number" class="w-full p-2 bg-white rounded" />
+      </div>
+
+      <div>
+        <label class="font-bold uppercase">Division</label>
+        <select id="division" class="w-full p-2 bg-white rounded">
+          <option value="Patrol Division">Patrol Division</option>
+          <option value="Investigations">Investigations</option>
+          <option value="Highway Enforcement">Highway Enforcement</option>
+          <option value="Air Support">Air Support</option>
+          <option value="Training & Standards">Training & Standards</option>
+          <option value="Command Staff">Command Staff</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="font-bold uppercase">Headshot Image URL</label>
+        <input id="photoUrl" type="text" class="w-full p-2 bg-white rounded" placeholder="https://example.com/image.jpg" />
+      </div>
+
+      <div class="border-t border-gray-300 pt-4">
+        <label class="font-bold uppercase">Employment History JSON</label>
+        <textarea id="history" class="w-full p-2 bg-white rounded h-32" placeholder='[
+  {"from":"2019-01-02","to":"2021-05-01","change":"Promotion","agency":"PSSRP","rank":"Officer"},
+  {"from":"2021-05-01","to":"2024-01-01","change":"Promotion","agency":"PSSRP","rank":"Sergeant"}
+]'></textarea>
+      </div>
+
+      <button
+        type="submit"
+        class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded uppercase">
+        Add Officer
+      </button>
+
+    </form>
+
   </div>
 
 </section>
@@ -129,18 +124,6 @@
   <h1>a counter-surveillance practice</h1>
   <h2><a href="/about">read more here</a></h2>
 </footer>
-
-<style>
-  @import url("https://fonts.googleapis.com/css?family=Lato");
-
-  .tabs { float: none; list-style: none; position: relative; text-align: left; }
-  .tabs .item { display: block; }
-  .tabs input[type="radio"] { position: absolute; left: -9999px; }
-  .tabs label { cursor: pointer; }
-  .tabs .tab-content { display: none; position: absolute; left: 0; }
-  .tabs [id^="tab"]:checked + label { text-decoration: underline; }
-  .tabs [id^="tab"]:checked ~ .tab-content { display: block; }
-</style>
 
 </body>
 </html>
