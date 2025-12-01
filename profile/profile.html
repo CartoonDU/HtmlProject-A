@@ -3,21 +3,181 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width" />
-  <title>PSSRP Officer Profile</title>
-  <link rel="stylesheet" href="profile.css" />
+  <title>PSSRP Personnel Profile</title>
+
+  <script type="module">
+    document.documentElement.classList.remove('no-js');
+    document.documentElement.classList.add('js');
+  </script>
+
+  <link rel="stylesheet" href="/index.min.css" />
+
+  <meta name="description" content="PSSRP Personnel Database">
+  <meta property="og:title" content="PSSRP Personnel Profile">
+  <meta property="og:description" content="PSSRP Roleplay Personnel Profile">
+  <meta property="og:image" content="/headshots/default.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.2.0/dist/themes/dark.css" />
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.2.0/dist/shoelace.js"></script>
+  <script src="/profile.js" defer></script>
+
 </head>
-
 <body>
-  <header class="profile-header">
-    <h1>PSSRP Officer Profile</h1>
-  </header>
 
-  <main id="profileContainer" class="profile-container"></main>
+<header>
+  <h1>
+    <a href="/">
+      <span>P</span>SS <span>R</span>P Database
+    </a>
+  </h1>
+  <h2>Official Personnel Records</h2>
+</header>
 
-  <footer class="profile-footer">
-    <p>PSSRP Roleplay Database</p>
-  </footer>
+<style>
+  @import url("https://fonts.googleapis.com/css?family=Lato");
 
-  <script src="profile.js"></script>
+  .tabs { float:none; list-style:none; position:relative; text-align:left; }
+  .tabs .item { display:block; }
+  .tabs input[type="radio"] { position:absolute; top:0; left:-9999px; }
+  .tabs label { display:block; border-radius:2px 2px 0 0; cursor:pointer; position:relative; top:4px; }
+  .tabs .tab-content { z-index:2; display:none; overflow:hidden; position:absolute; left:0; }
+  .tabs [id^="tab"]:checked + label { text-decoration:underline; }
+  .tabs [id^="tab"]:checked ~ [id^="tab-content"] { display:block; }
+</style>
+
+<section class="lapd-profile-container">
+  <h1 class="lapd-name" id="officer-name">Officer Name</h1>
+
+  <div class="sm:flex gap-4 mx-auto max-w-[400px] sm:max-w-[1000px]">
+
+    <div class="flex flex-col">
+      <img id="officer-photo"
+        class="w-[400px] md:h-[100%] object-contain"
+        src="/headshots/default.png"
+      />
+    </div>
+
+    <div class="flex flex-col gap-4 text-lg">
+
+      <div>
+        <div><strong>Rank</strong>: <span id="officer-rank">Unknown</span></div>
+
+        <div>
+          <strong>Division</strong>:
+          <a id="officer-division-link" href="#">
+            <span id="officer-division">Unknown Division</span>
+          </a>
+        </div>
+
+        <div class="mb-4">
+          <strong>Email</strong>:
+          <a id="officer-email" href="#">
+            none
+          </a>
+        </div>
+
+        <div class="md:grid grid-cols-2 gap-x-4">
+          <div><strong>Unit Number</strong>: <span id="officer-serial">N/A</span></div>
+          <div><strong>Badge</strong>: <span id="officer-badge">N/A</span></div>
+        </div>
+
+        <div class="md:grid grid-cols-2 gap-4">
+          <div><strong>Roleplay Age</strong>: <span id="officer-age">N/A</span></div>
+          <div><strong>Joined PSSRP</strong>: <span id="officer-joined">N/A</span></div>
+        </div>
+
+        <div class="md:grid grid-cols-2 gap-4">
+          <div><strong>Height</strong>: <span id="officer-height">N/A</span></div>
+          <div><strong>Weight</strong>: <span id="officer-weight">N/A</span></div>
+        </div>
+
+      </div>
+
+      <div class="bg-[#ece5d0] rounded-md pl-4 pt-4 pb-5">
+        <ul class="tabs flex h-48 md:h-55" role="tablist">
+          <span class="font-bold truncate">ROLEPLAY PAY RECORDS&nbsp;</span>
+
+          <div class="item">
+            <input type="radio" name="tabs" id="tab2" checked />
+            <label for="tab2" class="pr-5 pb-3 pl-1 -m-1 font-bold">2024</label>
+            <div id="tab-content2" class="tab-content">
+              <ul class="payroll list-none text-sm md:text-lg" id="payroll-2024">
+                <li>Loading...</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="item">
+            <input type="radio" name="tabs" id="tab1" />
+            <label for="tab1" class="pr-5 pb-3 pl-1 -m-1 font-bold">2023</label>
+            <div id="tab-content1" class="tab-content">
+              <ul class="payroll list-none text-sm md:text-lg" id="payroll-2023">
+                <li>Loading...</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="item">
+            <input type="radio" name="tabs" id="tab0" />
+            <label for="tab0" class="pr-5 pb-3 pl-1 -m-1 font-bold">2022</label>
+            <div id="tab-content0" class="tab-content">
+              <ul class="payroll list-none text-sm md:text-lg" id="payroll-2022">
+                <li>Loading...</li>
+              </ul>
+            </div>
+          </div>
+
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="bg-[#ece5d0] rounded-md p-4 mt-6 mx-auto max-w-[300px] sm:max-w-[850px]">
+    <h2 class="font-bold text-[18px]">EMPLOYMENT HISTORY</h2>
+
+    <div id="employment-header" class="text-sm md:text-base mb-4">
+      <strong>Record ID</strong>: <span id="employment-id">N/A</span>
+      <strong>Name</strong>: <span id="employment-name">N/A</span>
+    </div>
+
+    <div class="text-sm md:text-base sm:flex gap-6 md:gap-0 md:flex-col">
+
+      <div class="bg-[#D7D2C4] p-2 hidden sm:block md:grid grid-cols-5 gap-x-2 gap-y-2 text-sm">
+        <div><strong>From</strong></div>
+        <div><strong>To</strong></div>
+        <div><strong>Change</strong></div>
+        <div><strong>Department</strong></div>
+        <div><strong>Rank</strong></div>
+      </div>
+
+      <div id="employment-history"></div>
+
+    </div>
+
+  </div>
+
+  <div class="lapd-profile-note">
+    <p>
+      All information shown here is for **roleplay purposes** only.  
+      PSSRP Personnel Database stores characters, ranks, assignments, and RP history created by players.
+    </p>
+    <p>
+      None of the information displayed is real.  
+      It is purely fictional and used for immersive storytelling.
+    </p>
+  </div>
+
+</section>
+
+<footer>
+  <h1>PSSRP Personnel System</h1>
+  <h2><a href="/about">Learn More</a></h2>
+</footer>
+
 </body>
 </html>
