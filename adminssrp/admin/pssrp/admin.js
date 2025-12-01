@@ -1,119 +1,110 @@
-document.addEventListener("DOMContentLoaded", () => {
-  
-  const form = {
-    name: document.getElementById("name"),
-    badge: document.getElementById("badge"),
-    serial: document.getElementById("serial"),
-    rank: document.getElementById("rank"),
-    division: document.getElementById("division"),
-    email: document.getElementById("email"),
-    age: document.getElementById("age"),
-    height: document.getElementById("height"),
-    weight: document.getElementById("weight"),
-    joined: document.getElementById("joined"),
-    photoUpload: document.getElementById("photoUpload"),
-    employment: document.getElementById("employment"),
-    pay: document.getElementById("pay")
-  };
+// ADMIN PANEL SCRIPT
+// Requires storage.js
 
-  const saveBtn = document.getElementById("saveOfficer");
-  const officerList = document.getElementById("officerList");
+document.getElementById("saveOfficerBtn").onclick = () => saveOfficer();
 
-  let editingSerial = null;
+function saveOfficer() {
+    let name = document.getElementById("officerName").value.trim();
+    let badge = document.getElementById("officerBadge").value.trim();
+    let rank = document.getElementById("officerRank").value.trim();
+    let division = document.getElementById("officerDivision").value;
+    let age = document.getElementById("officerAge").value.trim();
+    let history = document.getElementById("officerHistory").value.trim();
+    let imgFile = document.getElementById("officerImage").files[0];
 
-  function updateOfficerList() {
-    officerList.innerHTML = "";
-    const all = getAllOfficers();
+    let id = document.getElementById("officerID").value.trim();
+    if (id === "") id = Math.floor(Math.random() * 90000 + 10000).toString();
 
-    if (all.length === 0) {
-      officerList.innerHTML = "<p>No officers saved yet.</p>";
-      return;
+    if (!name || !badge || !rank || !division) {
+        alert("Missing required fields");
+        return;
     }
 
-    all.forEach(officer => {
-      const el = document.createElement("div");
-      el.className = "bg-zinc-800 p-4 rounded flex justify-between items-center";
+    // Save officer entry
+    const officerData = {
+        id,
+        name,
+        badge,
+        rank,
+        age,
+        division,
+        history,
+        image: ""
+    };
 
-      el.innerHTML = `
-        <div>
-          <h2 class="text-xl font-bold">${officer.name}</h2>
-          <p>${officer.rank} — ${officer.division}</p>
-          <p class="text-gray-400">Badge: ${officer.badge} | Unit: ${officer.serial}</p>
-        </div>
-
-        <div class="flex gap-4">
-          <button class="px-4 py-2 bg-orange-500 rounded editBtn" data-id="${officer.serial}">Edit</button>
-          <button class="px-4 py-2 bg-red-500 rounded deleteBtn" data-id="${officer.serial}">Delete</button>
-        </div>
-      `;
-
-      officerList.appendChild(el);
-    });
-
-    document.querySelectorAll(".editBtn").forEach(btn =>
-      btn.addEventListener("click", () => loadOfficer(btn.dataset.id))
-    );
-
-    document.querySelectorAll(".deleteBtn").forEach(btn =>
-      btn.addEventListener("click", () => {
-        deleteOfficer(btn.dataset.id);
-        updateOfficerList();
-      })
-    );
-  }
-
-  function loadOfficer(serial) {
-    const officer = getOfficer(serial);
-    editingSerial = serial;
-
-    form.name.value = officer.name;
-    form.badge.value = officer.badge;
-    form.serial.value = officer.serial;
-    form.rank.value = officer.rank;
-    form.division.value = officer.division;
-    form.email.value = officer.email;
-    form.age.value = officer.age;
-    form.height.value = officer.height;
-    form.weight.value = officer.weight;
-    form.joined.value = officer.joined;
-    form.employment.value = officer.employment;
-    form.pay.value = JSON.stringify(officer.pay, null, 2);
-
-    window.scrollTo(0, 0);
-  }
-
-  saveBtn.addEventListener("click", async () => {
-    const reader = new FileReader();
-
-    function saveWithPhoto(photo) {
-      const officer = {
-        name: form.name.value,
-        badge: form.badge.value,
-        serial: form.serial.value,
-        rank: form.rank.value,
-        division: form.division.value,
-        email: form.email.value,
-        age: form.age.value,
-        height: form.height.value,
-        weight: form.weight.value,
-        joined: form.joined.value,
-        employment: form.employment.value,
-        pay: JSON.parse(form.pay.value || "{}"),
-        photo: photo
-      };
-
-      saveOfficerData(officer);
-      updateOfficerList();
-    }
-
-    if (form.photoUpload.files.length > 0) {
-      reader.onload = e => saveWithPhoto(e.target.result);
-      reader.readAsDataURL(form.photoUpload.files[0]);
+    if (imgFile) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            officerData.image = reader.result;
+            finishSave(officerData);
+        };
+        reader.readAsDataURL(imgFile);
     } else {
-      const existing = getOfficer(form.serial.value);
-      saveWithPhoto(existing ? existing.photo : "/headshots/default.png");
+        finishSave(officerData);
     }
-  });
+}
 
-  updateOfficerList();
-});
+function finishSave(officerData) {
+    addOfficer(officerData);
+
+    generateProfilePage(officerData);
+    updateDivisionRoster(officerData);
+
+    alert("Officer saved successfully!");
+}
+
+function generateProfilePage(officer) {
+    const html = `
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/profile/profile.css">
+<script src="/profile/profile.js"></script>
+</head>
+<body>
+<div class="profile-wrapper">
+    <h1>${officer.name}</h1>
+    <img src="${officer.image}">
+    <p><strong>Rank:</strong> ${officer.rank}</p>
+    <p><strong>Badge:</strong> ${officer.badge}</p>
+    <p><strong>Division:</strong> ${officer.division}</p>
+    <p><strong>Age:</strong> ${officer.age}</p>
+    <h2>Employment History</h2>
+    <p>${officer.history.replace(/\n/g,"<br>")}</p>
+</div>
+</body>
+</html>
+    `;
+
+    localStorage.setItem("profile_page_" + officer.id, html);
+}
+
+function updateDivisionRoster(officer) {
+    const key = "division_page_" + officer.division;
+
+    let current = localStorage.getItem(key);
+    if (!current) {
+        current = `
+<h1>${officer.division} Division</h1>
+<div class="roster-grid"></div>`;
+    }
+
+    const container = document.createElement("div");
+    container.innerHTML = current;
+
+    const grid = container.querySelector(".roster-grid");
+
+    const card = document.createElement("div");
+    card.className = "officer-card";
+    card.innerHTML = `
+        <a href="/profile/profile.html?id=${officer.id}">
+            <img src="${officer.image}">
+            <p>${officer.name}</p>
+            <p>${officer.rank}</p>
+        </a>
+    `;
+
+    grid.appendChild(card);
+
+    localStorage.setItem(key, container.innerHTML);
+}
