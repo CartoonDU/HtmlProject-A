@@ -1,55 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width" />
   <title>PSSRP Admin Panel</title>
-  <link rel="stylesheet" href="admin.css" />
+
+  <script src="/storage.js" defer></script>
+  <script src="/admin/admin.js" defer></script>
+
+  <link rel="stylesheet" href="/index.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-  <header class="admin-header">
-    <h1>PSSRP Officer Administration</h1>
-    <h2>Create • Manage • Update Officer Records</h2>
-  </header>
+<body class="bg-black text-white">
 
-  <main class="admin-container">
-    <form id="officerForm" class="admin-form">
-      <h2>Add / Update Officer</h2>
+<header class="text-center py-10">
+  <h1 class="text-5xl font-bold text-orange-500 uppercase">PSSRP Admin Panel</h1>
+  <h2 class="text-xl text-gray-300">Personnel Management System</h2>
+</header>
 
-      <label>Full Name</label>
-      <input type="text" id="name" required />
+<section class="max-w-5xl mx-auto bg-zinc-900 p-8 rounded-xl">
 
-      <label>Badge Number</label>
-      <input type="text" id="badge" required />
+  <h1 class="text-3xl font-bold mb-6 text-orange-400">Add / Edit Officer</h1>
 
-      <label>Serial / ID</label>
-      <input type="text" id="serial" required />
+  <form id="officerForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-      <label>Rank</label>
-      <input type="text" id="rank" required />
+    <div>
+      <label class="font-bold">Full Name</label>
+      <input id="name" type="text" class="w-full p-3 rounded bg-zinc-800"/>
+    </div>
 
-      <label>Division Assigned</label>
-      <input type="text" id="division" required />
+    <div>
+      <label class="font-bold">Badge Number</label>
+      <input id="badge" type="text" class="w-full p-3 rounded bg-zinc-800"/>
+    </div>
 
-      <label>Age</label>
-      <input type="number" id="age" required />
+    <div>
+      <label class="font-bold">Unit Number</label>
+      <input id="serial" type="text" class="w-full p-3 rounded bg-zinc-800"/>
+    </div>
 
-      <label>Headshot Image</label>
-      <input type="file" id="image" accept="image/*" />
+    <div>
+      <label class="font-bold">Rank</label>
+      <input id="rank" type="text" class="w-full p-3 rounded bg-zinc-800"/>
+    </div>
 
-      <label>Employment History (Promotions / Demotions)</label>
-      <textarea id="history"></textarea>
+    <div>
+      <label class="font-bold">Division</label>
+      <input id="division" type="text" class="w-full p-3 rounded bg-zinc-800" placeholder="Example: Newton Division"/>
+    </div>
 
-      <button type="submit" class="save-btn">Save Officer</button>
-    </form>
+    <div>
+      <label class="font-bold">Email</label>
+      <input id="email" type="text" class="w-full p-3 rounded bg-zinc-800"/>
+    </div>
 
-    <section class="officer-list">
-      <h2>Officer Database</h2>
-      <ul id="officerDisplay"></ul>
-    </section>
-  </main>
+    <div>
+      <label class="font-bold">Age</label>
+      <input id="age" type="number" class="w-full p-3 rounded bg-zinc-800"/>
+    </div>
 
-  <script src="admin.js"></script>
+    <div>
+      <label class="font-bold">Height</label>
+      <input id="height" type="text" class="w-full p-3 rounded bg-zinc-800" placeholder="5'10"/>
+    </div>
+
+    <div>
+      <label class="font-bold">Weight</label>
+      <input id="weight" type="text" class="w-full p-3 rounded bg-zinc-800" placeholder="180 lbs"/>
+    </div>
+
+    <div>
+      <label class="font-bold">Year Joined</label>
+      <input id="joined" type="number" class="w-full p-3 rounded bg-zinc-800"/>
+    </div>
+
+    <div>
+      <label class="font-bold">Upload Headshot</label>
+      <input id="photoUpload" type="file" accept="image/*" class="w-full p-3 rounded bg-zinc-800"/>
+    </div>
+
+    <div class="md:col-span-2">
+      <label class="font-bold text-orange-400">Employment History</label>
+      <textarea id="employment" rows="5" class="w-full p-3 rounded bg-zinc-800"
+      placeholder="Example format:
+2020-2024 | Promotion | Patrol → Sergeant
+2018-2020 | Assignment | Traffic Division
+      "></textarea>
+    </div>
+
+    <div class="md:col-span-2">
+      <label class="font-bold text-orange-400">Pay Records (JSON Format)</label>
+      <textarea id="pay" rows="5" class="w-full p-3 rounded bg-zinc-800"
+      placeholder='{
+  "2024": { "Regular": 0, "Bonus": 0, "Total": 0 },
+  "2023": { "Regular": 0, "Bonus": 0, "Total": 0 }
+}'></textarea>
+    </div>
+
+  </form>
+
+  <button id="saveOfficer"
+    class="bg-orange-500 hover:bg-orange-600 text-black font-bold mt-6 p-4 w-full rounded">
+    Save Officer
+  </button>
+
+</section>
+
+<section class="max-w-5xl mx-auto mt-10 bg-zinc-900 p-8 rounded-xl">
+  <h1 class="text-3xl font-bold mb-6 text-orange-400">Existing Officers</h1>
+
+  <div id="officerList" class="space-y-4"></div>
+</section>
+
 </body>
 </html>
