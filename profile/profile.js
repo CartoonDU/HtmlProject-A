@@ -1,51 +1,30 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const serial = new URLSearchParams(window.location.search).get("id");
-  const o = getOfficer(serial);
+document.getElementById("addOfficerForm").addEventListener("submit", function (e) {
+    e.preventDefault();
 
-  if (!o) return;
+    const officer = {
+        id: Date.now(),
+        name: document.getElementById("name").value,
+        rank: document.getElementById("rank").value,
+        badge: document.getElementById("badge").value,
+        serial: document.getElementById("serial").value,
+        email: document.getElementById("email").value,
+        age: document.getElementById("age").value,
+        height: document.getElementById("height").value,
+        weight: document.getElementById("weight").value,
+        joined: document.getElementById("joined").value,
+        division: document.getElementById("division").value,
+        photo: document.getElementById("photoUrl").value,
+        history: JSON.parse(document.getElementById("history").value || "[]"),
+        payroll: {
+            "2024": [],
+            "2023": [],
+            "2022": []
+        }
+    };
 
-  document.getElementById("officer-name").textContent = o.name;
-  document.getElementById("officer-rank").textContent = o.rank;
-  document.getElementById("officer-division").textContent = o.division;
-  document.getElementById("officer-division-link").href = "/division.html?name=" + o.division;
-  document.getElementById("officer-email").textContent = o.email;
-  document.getElementById("officer-email").href = "mailto:" + o.email;
+    saveOfficer(officer);
 
-  document.getElementById("officer-serial").textContent = o.serial;
-  document.getElementById("officer-badge").textContent = o.badge;
-  document.getElementById("officer-age").textContent = o.age;
-  document.getElementById("officer-height").textContent = o.height;
-  document.getElementById("officer-weight").textContent = o.weight;
-  document.getElementById("officer-joined").textContent = o.joined;
+    alert("Officer Added Successfully!");
 
-  document.getElementById("officer-photo").src = o.photo;
-
-  const employmentDiv = document.getElementById("employment-history");
-
-  employmentDiv.innerHTML = o.employment
-    .split("\n")
-    .map(line => {
-      const parts = line.split("|").map(x => x.trim());
-      return `
-        <div class="odd:bg-[#D7D2C4] p-2 md:grid grid-cols-5 gap-x-2 text-sm">
-          <div>${parts[0] || ""}</div>
-          <div>${parts[1] || ""}</div>
-          <div>${parts[2] || ""}</div>
-          <div>${parts[3] || ""}</div>
-          <div>${parts[4] || ""}</div>
-        </div>`;
-    })
-    .join("");
-
-  for (let year of [2024, 2023, 2022]) {
-    const ul = document.getElementById("payroll-" + year);
-    const p = o.pay[year];
-    if (p) {
-      ul.innerHTML = `
-        <li><strong>Regular:</strong> $${p.Regular}</li>
-        <li><strong>Bonus:</strong> $${p.Bonus}</li>
-        <li><strong>Total:</strong> $${p.Total}</li>
-      `;
-    }
-  }
+    this.reset();
 });
