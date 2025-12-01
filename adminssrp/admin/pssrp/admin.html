@@ -1,117 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width" />
-  <title>PSSRP Admin Panel</title>
+<meta charset="UTF-8" />
+<title>PSSRP Admin Panel</title>
 
-  <script src="/storage.js" defer></script>
-  <script src="/admin/admin.js" defer></script>
+<link rel="stylesheet" href="/index.css" />
+<link rel="stylesheet" href="admin.css" />
 
-  <link rel="stylesheet" href="/index.min.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
+<script src="/storage.js"></script>
+<script src="admin.js" defer></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.2.0/dist/themes/dark.css" />
+<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.2.0/dist/shoelace.js"></script>
+
 </head>
 
-<body class="bg-black text-white">
-
-<header class="text-center py-10">
-  <h1 class="text-5xl font-bold text-orange-500 uppercase">PSSRP Admin Panel</h1>
-  <h2 class="text-xl text-gray-300">Personnel Management System</h2>
+<body>
+<header class="site-header">
+    <h1 class="site-header-title">PSSRP Admin System</h1>
+    <h2 class="site-header-subtitle">Manage Officers & Rosters</h2>
 </header>
 
-<section class="max-w-5xl mx-auto bg-zinc-900 p-8 rounded-xl">
+<main class="admin-wrapper">
 
-  <h1 class="text-3xl font-bold mb-6 text-orange-400">Add / Edit Officer</h1>
+<section class="admin-card">
+    <h2>Add New Officer</h2>
 
-  <form id="officerForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <label>Officer Name</label>
+    <input id="officerName" type="text" />
 
-    <div>
-      <label class="font-bold">Full Name</label>
-      <input id="name" type="text" class="w-full p-3 rounded bg-zinc-800"/>
-    </div>
+    <label>Badge Number</label>
+    <input id="officerBadge" type="text" />
 
-    <div>
-      <label class="font-bold">Badge Number</label>
-      <input id="badge" type="text" class="w-full p-3 rounded bg-zinc-800"/>
-    </div>
+    <label>Serial / ID</label>
+    <input id="officerID" type="text" placeholder="Leave blank to auto-generate" />
 
-    <div>
-      <label class="font-bold">Unit Number</label>
-      <input id="serial" type="text" class="w-full p-3 rounded bg-zinc-800"/>
-    </div>
+    <label>Rank</label>
+    <input id="officerRank" type="text" />
 
-    <div>
-      <label class="font-bold">Rank</label>
-      <input id="rank" type="text" class="w-full p-3 rounded bg-zinc-800"/>
-    </div>
+    <label>Division</label>
+    <select id="officerDivision">
+        <option value="">Select division</option>
+        <option value="airsupport">Air Support Division</option>
+        <option value="centralbureau">Central Bureau</option>
+        <option value="central">Central Division</option>
+        <option value="centraltraffic">Central Traffic Division</option>
+        <option value="chief">Chief of Police</option>
+        <option value="communications">Communications Division</option>
+        <option value="cid">Criminal Investigation Division</option>
+        <option value="detectivebureau">Detective Bureau</option>
+        <option value="vice">Detective Support & Vice Division</option>
+        <option value="emergencycommand">Emergency Command Control</option>
+        <option value="gnd">Gang & Narcotics Division</option>
+        <option value="harbor">Harbor Division</option>
+        <option value="hollenbeck">Hollenbeck Division</option>
+        <option value="hollywood">Hollywood Division</option>
+        <option value="ia">Internal Affairs</option>
+        <option value="metro">Metro Division</option>
+        <option value="newton">Newton Division</option>
+        <option value="northhollywood">North Hollywood</option>
+        <option value="olympic">Olympic Division</option>
+        <option value="pacific">Pacific Division</option>
+        <option value="rampart">Rampart Division</option>
+        <option value="topanga">Topanga Division</option>
+        <option value="southwest">Southwest Division</option>
+        <option value="southeast">Southeast Division</option>
+    </select>
 
-    <div>
-      <label class="font-bold">Division</label>
-      <input id="division" type="text" class="w-full p-3 rounded bg-zinc-800" placeholder="Example: Newton Division"/>
-    </div>
+    <label>Age</label>
+    <input id="officerAge" type="number" />
 
-    <div>
-      <label class="font-bold">Email</label>
-      <input id="email" type="text" class="w-full p-3 rounded bg-zinc-800"/>
-    </div>
+    <label>Employment History (optional)</label>
+    <textarea id="officerHistory"></textarea>
 
-    <div>
-      <label class="font-bold">Age</label>
-      <input id="age" type="number" class="w-full p-3 rounded bg-zinc-800"/>
-    </div>
+    <label>Upload Headshot</label>
+    <input id="officerImage" type="file" accept="image/*" />
 
-    <div>
-      <label class="font-bold">Height</label>
-      <input id="height" type="text" class="w-full p-3 rounded bg-zinc-800" placeholder="5'10"/>
-    </div>
-
-    <div>
-      <label class="font-bold">Weight</label>
-      <input id="weight" type="text" class="w-full p-3 rounded bg-zinc-800" placeholder="180 lbs"/>
-    </div>
-
-    <div>
-      <label class="font-bold">Year Joined</label>
-      <input id="joined" type="number" class="w-full p-3 rounded bg-zinc-800"/>
-    </div>
-
-    <div>
-      <label class="font-bold">Upload Headshot</label>
-      <input id="photoUpload" type="file" accept="image/*" class="w-full p-3 rounded bg-zinc-800"/>
-    </div>
-
-    <div class="md:col-span-2">
-      <label class="font-bold text-orange-400">Employment History</label>
-      <textarea id="employment" rows="5" class="w-full p-3 rounded bg-zinc-800"
-      placeholder="Example format:
-2020-2024 | Promotion | Patrol → Sergeant
-2018-2020 | Assignment | Traffic Division
-      "></textarea>
-    </div>
-
-    <div class="md:col-span-2">
-      <label class="font-bold text-orange-400">Pay Records (JSON Format)</label>
-      <textarea id="pay" rows="5" class="w-full p-3 rounded bg-zinc-800"
-      placeholder='{
-  "2024": { "Regular": 0, "Bonus": 0, "Total": 0 },
-  "2023": { "Regular": 0, "Bonus": 0, "Total": 0 }
-}'></textarea>
-    </div>
-
-  </form>
-
-  <button id="saveOfficer"
-    class="bg-orange-500 hover:bg-orange-600 text-black font-bold mt-6 p-4 w-full rounded">
-    Save Officer
-  </button>
-
+    <button id="saveOfficerBtn">Save Officer</button>
 </section>
 
-<section class="max-w-5xl mx-auto mt-10 bg-zinc-900 p-8 rounded-xl">
-  <h1 class="text-3xl font-bold mb-6 text-orange-400">Existing Officers</h1>
-
-  <div id="officerList" class="space-y-4"></div>
-</section>
+</main>
 
 </body>
 </html>
